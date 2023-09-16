@@ -75,3 +75,45 @@ run_antenna_check
 <br>
 
 ## Skywater-130 PDK
+
+
+## Invoking OpenLane
+
+![d1_1](https://github.com/ramdev604/pes_pd/assets/43489027/cb079707-c611-486c-bab5-4bdde433faae)
+
+
+flow.tcl is the file that contains the script to run the designs
+
+## Importing package
+
+Different software dependencies are needed to run OpenLANE. To import these into the OpenLANE tool we need to run: 
+```package require openlane 0.9```
+
+
+## Prepare the design for the flow 
+
+```prep -design picorv32a```
+
+![d1_2](https://github.com/ramdev604/pes_pd/assets/43489027/fa1bfd0c-9e08-4fe9-8117-73a577d94ee1)
+
+
+## Synthesis
+
+```run_synthesis```
+
+![d1_3](https://github.com/ramdev604/pes_pd/assets/43489027/dd3a1f39-7e8a-4769-8e69-dffd743ff44c)
+
+
+![d1_4](https://github.com/ramdev604/pes_pd/assets/43489027/eb0124bb-f865-4340-af6a-3c9b13e0da0b)
+
+### Flop Ratio = (No. of D flip flops / Total number of cells) = 1613/14876 = 10.08%
+                
+
+
+
+
+</details>
+
+<details>
+<summary>DAY 2 : Good Floorplan vs Bad Floorplan and Introduction to library cells</summary>
+<br>
