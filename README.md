@@ -68,7 +68,7 @@ run_lvs
 run_antenna_check
 ```
 
-# Lab
+# Labs
 
 <details>
 <summary>DAY 1 : Inception of opensource-EDA, Openlane and Skywater130</summary>
