@@ -124,6 +124,7 @@ in OpenLANE, enter ```run_floorplan``` and the results will be updated in the ru
 
 To view the layout of the floorplan, use the command ```magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def &```
 
+
 ![d2_1](https://github.com/ramdev604/pes_pd/assets/43489027/b29d33fe-8860-4663-8a3e-72f0011602c3)
 
 
@@ -131,9 +132,12 @@ To view the layout of the floorplan, use the command ```magic -T /home/vsduser/D
 ### Placement
 
 ```run_placement```
+
+
 ![d2_2](https://github.com/ramdev604/pes_pd/assets/43489027/6e35d72e-789f-4026-85b6-bb02daa05741)
 
 To view the layout of the placement, use the command ```magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &```
+
 
 ![d2_3](https://github.com/ramdev604/pes_pd/assets/43489027/a163cce3-dd19-4dae-9a59-271a3f96131b)
 
