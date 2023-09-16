@@ -2,7 +2,7 @@
 
 ## OpenLANE Design Stages
 
-OpenLANE flow consists of several stages. By default all flow steps are run in sequence. Each stage may consist of multiple sub-stages. OpenLANE can also be run interactively as shown [here][25].
+OpenLANE flow consists of several stages. By default all flow steps are run in sequence. Each stage may consist of multiple sub-stages. OpenLANE can also be run interactively..
 
 1. *Synthesis*
     1. `yosys` - Performs RTL synthesis
