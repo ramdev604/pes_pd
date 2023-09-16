@@ -2,7 +2,7 @@
 
 ## OpenLANE Design Stages
 
-OpenLANE flow consists of several stages. By default all flow steps are run in sequence. Each stage may consist of multiple sub-stages. OpenLANE can also be run interactively..
+OpenLANE flow consists of several stages. By default all flow steps are run in sequence. Each stage may consist of multiple sub-stages. OpenLANE can also be run interactively.
 
 1. *Synthesis*
     1. `yosys` - Performs RTL synthesis
@@ -34,7 +34,7 @@ OpenLANE flow consists of several stages. By default all flow steps are run in s
     3. `Netgen` - Performs LVS Checks
     4. `CVC` - Performs Circuit Validity Checks
 
-OpenLane can be operated at 2 different modes ie., Automated flow and Interactive mode.
+OpenLANE can be operated at 2 different modes ie., Automated flow and Interactive mode.
 
 ## To enter the automated flow, use these commands
 ```
@@ -77,7 +77,7 @@ run_antenna_check
 ## Skywater-130 PDK
 
 
-## Invoking OpenLane
+## Invoking OpenLANE
 
 ![d1_1](https://github.com/ramdev604/pes_pd/assets/43489027/cb079707-c611-486c-bab5-4bdde433faae)
 
