@@ -186,5 +186,5 @@ These are the main parameters that we use to calculate factors such as propogati
 </details>
 
 <details>
-<summary>DAY 3 :  Design library cell </summary>
+<summary>DAY 3 :  Design library cell using Magic Layout and ngspice characterization  </summary>
 <br>
