@@ -117,3 +117,70 @@ Different software dependencies are needed to run OpenLANE. To import these into
 <details>
 <summary>DAY 2 : Good Floorplan vs Bad Floorplan and Introduction to library cells</summary>
 <br>
+
+## Floorplan
+
+in OpenLANE, enter ```run_floorplan``` and the results will be updated in the runs folder
+
+To view the layout of the floorplan, use the command ```magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def &```
+
+![d2_1](https://github.com/ramdev604/pes_pd/assets/43489027/b29d33fe-8860-4663-8a3e-72f0011602c3)
+
+
+## Library Binding and Placement
+### Placement
+
+```run_placement```
+![d2_2](https://github.com/ramdev604/pes_pd/assets/43489027/6e35d72e-789f-4026-85b6-bb02daa05741)
+
+To view the layout of the placement, use the command ```magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &```
+
+![d2_3](https://github.com/ramdev604/pes_pd/assets/43489027/a163cce3-dd19-4dae-9a59-271a3f96131b)
+
+
+## Cell Design Flow
+
+Cell design is done in 3 parts:
+
+1. **Inputs** - PDKs (Process design kits), DRC & LVS rules, SPICE models, library & user-defined specs.
+2. **Design Steps** - Design steps of cell design involves Circuit Design, Layout Design, Characterization. The software GUNA used for characterization. The characterization can be classified as Timing characterization, Power characterization and Noise characterization.
+3. **Outputs** - Outputs of the Design are CDL (Circuit Description Language), GDSII, LEF, extracted Spice netlist (.cir), timing, noise, power.libs, function.
+
+### Standard cell Charachterization Flow
+
+Standard Cell Libraries consist of cells with different functionality/drive strengths. These cells need to be characterized by liberty files to be used by synthesis tools to determine optimal circuit arrangement. The open-source software GUNA is used for characterization.
+Characterization is a well-defined flow consisting of the following steps:
+
+- Link Model File of CMOS containing property definitions
+- Specify process corner(s) for the cell to be characterized
+- Specify cell delay and slew thresholds percentages
+- Specify timing and power tables
+- Read the parasitic extracted netlist
+- Apply input or stimulus
+- Provide necessary simulation commands
+
+### General Timing characterization parameters
+
+#### Timing threshold definitions
+
+- ```slew_low_rise_thr``` - 20% from bottom power supply when the signal is rising
+- ```slew_high_rise_thr``` - 20% from top power supply when the signal is rising
+- ```slew_low_fall_thr``` - 20% from bottom power supply when the signal is falling
+- ```slew_high_fall_thr``` - 20% from top power supply when the signal is falling
+- ```in_rise_thr``` - 50% point on the rising edge of input
+- ```in_fall_thr``` - 50% point on the falling edge of input
+- ```out_rise_thr``` - 50% point on the rising edge of ouput
+- ```out_fall_thr``` - 50% point on the falling edge of ouput
+
+These are the main parameters that we use to calculate factors such as propogation delay and transition time
+
+- ```propogation delay ``` - time(out_*_thr) - time(in_*_thr)
+- ```Transition time``` - time(slew_high_rise_thr) - time(slew_low_rise_thr)
+
+[BACK TO TOP](https://github.com/yagnavivek/PES_OpenLane_PD#to-enter-the-automated-flow-use-these-commands)
+
+</details>
+
+<details>
+<summary>DAY 3 :  Design library cell </summary>
+<br>
