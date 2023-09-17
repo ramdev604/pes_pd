@@ -181,7 +181,6 @@ These are the main parameters that we use to calculate factors such as propogati
 - ```propogation delay ``` - time(out_*_thr) - time(in_*_thr)
 - ```Transition time``` - time(slew_high_rise_thr) - time(slew_low_rise_thr)
 
-[BACK TO TOP](https://github.com/yagnavivek/PES_OpenLane_PD#to-enter-the-automated-flow-use-these-commands)
 
 </details>
 
@@ -234,6 +233,7 @@ The results obtained from the graph are :
 <details>
 <summary>DAY 4 : Pre-Layout timing analysis and importance of good clock tree</summary>
 <br>
+    
 ## Extraction of LEF 
 
 
@@ -295,7 +295,9 @@ For the design to be complete, the worst negative slack needs to be above or equ
     - Enalbed CELL_SIZING
     - Enabled SYNTH_STRATEGY with parameter as "DELAY 1"
     - The synthesis result is :
-  ![d4_5](https://github.com/ramdev604/pes_pd/assets/43489027/f08a7a45-ce8e-4b9f-b385-c4556c3fb5a5)
+      
+
+![d4_5](https://github.com/ramdev604/pes_pd/assets/43489027/f08a7a45-ce8e-4b9f-b385-c4556c3fb5a5)
 
     
 ![d4_6](https://github.com/ramdev604/pes_pd/assets/43489027/53d4f874-ccb3-4d10-b7a9-a38a798682c5)
