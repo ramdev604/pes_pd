@@ -234,3 +234,134 @@ The results obtained from the graph are :
 <details>
 <summary>DAY 4 : Pre-Layout timing analysis and importance of good clock tree</summary>
 <br>
+## Extraction of LEF 
+
+
+Track info can be found at :
+
+``` ~/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/openlane/sky130fd_sc_hd/tracks.info```
+
+![d4_1](https://github.com/ramdev604/pes_pd/assets/43489027/e1479fe6-55ca-4ed7-a226-2791275da645)
+
+
+- 1st value indicates the offset and 2nd value indicates the pitch along provided direction
+
+### Setting grid values using above file info
+
+![d4_2](https://github.com/ramdev604/pes_pd/assets/43489027/1dfd759c-446f-419a-b276-aa4fa0a465bc)
+
+
+
+- From the above pic, its confirmed that the pins A and Y are at the intersection of X and Y tracks. So the first condition is met.
+- The PR boundary is taking 3 grids on width and 9 grids on height which says that the 2nd condition is also met
+
+## LEF Generation
+
+Since the layout is perfect, we can generate the lef file
+
+#### 1. save the modified layout (with new grid)
+   - In console, type ```save sky130_vsdinv.mag```
+   - This saves the modified layout in current working directory
+
+#### 2. Open the file and extract LEF
+   - Open using ``` magic -T sky130A.tch sky130_vsdinv.mag```
+   - in the console opened, type ```lef write``` and a lef file will be generated
+
+![d4_3](https://github.com/ramdev604/pes_pd/assets/43489027/d6267e2d-62f1-4fd0-84b7-e9b3e5c8df6b)
+
+
+
+#### 4. Make sure the lef file is added
+
+- Include the below command to include the additional lef into the flow:
+      
+          set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+        
+          add_lefs -src $lefs
+
+![d4_4](https://github.com/ramdev604/pes_pd/assets/43489027/b545b775-280d-4d24-9601-845dcb073f02)
+
+
+since there is slack, we have to reduce it
+
+VLSI engineers will obtain system specifications in the architecture design phase. These specifications will determine a required frequency of operation. To analyze a circuit's timing performance designers will use static timing analysis tools (STA). When referring to pre clock tree synthesis STA analysis we are mainly concerned with setup timing in regards to a launch clock. STA will report problems such as worst negative slack (WNS) and total negative slack (TNS). These refer to the worst path delay and total path delay in regards to our setup timing restraint. Fixing slack violations can be debugged through performing STA analysis with OpenSTA, which is integrated in the OpenLANE tool. To describe these constraints to tools such as In order to ensure correct operation of these tools two steps must be taken:
+
+- Design configuration files (.conf) - Tool configuration files for the specified design
+- Design Synopsys design constraint (.sdc) files - Industry standard constraints file
+
+For the design to be complete, the worst negative slack needs to be above or equal to 0. If the slack is outside of this range we can do one of multiple things:
+
+1. Review our synthesis strategy in OpenLANE
+    - Enalbed CELL_SIZING
+    - Enabled SYNTH_STRATEGY with parameter as "DELAY 1"
+    - The synthesis result is :
+  ![d4_5](https://github.com/ramdev604/pes_pd/assets/43489027/f08a7a45-ce8e-4b9f-b385-c4556c3fb5a5)
+
+    
+![d4_6](https://github.com/ramdev604/pes_pd/assets/43489027/53d4f874-ccb3-4d10-b7a9-a38a798682c5)
+
+
+
+    The delay is high when the fanout is high. Therefore we can re-run synthesis by changing the value of ```SYNTH_MAX_FANOUT``` variable
+    
+2. Enable cell buffering 
+3. Perform manual cell replacement on our WNS path with the OpenSTA tool
+
+    - We can see which net is driving most outputs and replace the driver cell with larger form of its own kind
+
+    ![d4_7](https://github.com/ramdev604/pes_pd/assets/43489027/3d290a73-ce45-4909-8e78-f1383db6436f)
+
+
+4. Optimize the fanout value with OpenLANE tool
+
+Since we have synthesised the core using our vsdinv cell too and as it got successfully synthesized, it should be visible in layout after ```run_placement``` stage which is followed after ```run_floorplan``` stage
+![d4_8](https://github.com/ramdev604/pes_pd/assets/43489027/4092e3cf-65e1-435f-83b5-03dc2486eb5b)
+
+</details>
+
+<details>
+<summary>DAY 5 : Final steps for RTL2GDSII</summary>
+<br>
+
+## Power Distribution Network
+
+After generating our clock tree network and verifying post routing STA checks we are ready to generate the power distribution network ```gen_pdn``` in OpenLANE:
+
+The PDN feature within OpenLANE will create:
+
+- Power ring global to the entire core
+- Power halo local to any preplaced cells
+- Power straps to bring power into the center of the chip
+- Power rails for the standard cells
+
+![d5_1](https://github.com/ramdev604/pes_pd/assets/43489027/d49d45aa-5d23-4e8f-930c-948c394c4af7)
+
+
+Note: The pitch of the metal 1 power rails defines the height of the standard cells
+
+## Global and Detailed Routing
+
+OpenLANE uses TritonRoute as the routing engine ```run_routing``` for physical implementations of designs. Routing consists of two stages:
+
+- Global Routing - Routing guides are generated for interconnects on our netlist defining what layers, and where on the chip each of the nets will be reputed
+- Detailed Routing - Metal traces are iteratively laid across the routing guides to physically implement the routing guides
+
+If DRC errors persist after routing the user has two options:
+
+- Re-run routing with higher QoR settings
+- Manually fix DRC errors specific in tritonRoute.drc file
+
+## SPEF Extraction
+
+After routing has been completed interconnect parasitics can be extracted to perform sign-off post-route STA analysis. The parasitics are extracted into a SPEF file. The SPEF extractor is not included within OpenLANE as of now.
+
+```
+cd ~/Desktop/work/tools/SPEFEXTRACTOR
+python3 main.py <path to merged.lef in tmp> <path to def in routing>
+```
+
+The SPEF File will be generated in the location where def file is present
+
+
+
+</details>
