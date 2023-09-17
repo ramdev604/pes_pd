@@ -185,6 +185,52 @@ These are the main parameters that we use to calculate factors such as propogati
 
 </details>
 
+
+
 <details>
 <summary>DAY 3 :  Design library cell using Magic Layout and ngspice characterization  </summary>
+<br>
+
+
+## Inverter Layout using Magic
+
+```
+cd Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign
+magic -T sky130A.tech sky130_inv.mag
+```
+
+## Exploring the Layout displayed by MAGIC
+
+Select the specific layer/device by hovering over the object and pressing, s, iteratively, until you traverse the hierarchy to the specified object:
+![d3_1](https://github.com/ramdev604/pes_pd/assets/43489027/7e77d661-2c1e-4f20-93a0-09eb411a247e)
+
+
+- select a region from the layout, go to the console and type ```what``` to display the information of selected area
+- To select a region, place ```cursor``` on that point and  press```s```. More the number of times you press ```s```, higher the abstraction selected.
+
+
+
+
+## Modified Spice netlist
+
+![modifiedspice](https://github.com/ramdev604/pes_pd/assets/43489027/78efc81d-8f8d-4aa0-8a9c-5dd210ddbfa8)
+
+
+To run the spice netlist, run ```ngspice sky130_inv.spice``` and ```plot y vs time a```
+![d3_2](https://github.com/ramdev604/pes_pd/assets/43489027/375b8998-04a9-4537-af16-35ae3ba9ebc1)
+
+![d3_3](https://github.com/ramdev604/pes_pd/assets/43489027/735909c7-fd85-4a8e-bf3f-7405d4e839d7)
+
+
+The results obtained from the graph are :
+- Rise Transition : 0.0395ns
+- Fall transition : 0.0282ns
+- Cell Rise delay : 0.03598ns
+- Cell fall delay : 0.0483ns
+
+</details>
+
+
+<details>
+<summary>DAY 4 : Pre-Layout timing analysis and importance of good clock tree</summary>
 <br>
