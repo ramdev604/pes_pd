@@ -290,6 +290,36 @@ For the design to be complete, the worst negative slack needs to be above or equ
 Since we have synthesised the core using our vsdinv cell too and as it got successfully synthesized, it should be visible in layout after ```run_placement``` stage which is followed after ```run_floorplan``` stage
 ![d4_8](https://github.com/ramdev604/pes_pd/assets/43489027/47852fe1-1979-44fd-9473-19d54a853f33)
 
+#### Clock Tree Synthesis
+
+After addressing slack violations using the "pre_sta.conf" configuration, generate a netlist with the corrected design using "write_verilog." Subsequently, replace the original OpenLANE-generated "picorv32a.synthesis.v" file with this modified netlist to ensure the design incorporates the necessary fixes.
+
+In the OpenLANE flow, proceed with the "run_floorplan," "run_placement," and "run_cts" stages to further refine the design and ensure that the corrections made to the netlist are incorporated into the physical layout.
+
+#### Task 5 - Post CTS- STA Analysis
+
+Step 1: Within OpenROAD, perform timing analysis by generating a `.db` database file.
+1) Launch OpenRoad.
+2) Load the LEF file from the "tmp" folder in your OpenLANE runs.
+3) Load the DEF file from the CTS results.
+4) Create and save the .db database file.
+5) Load the generated .db file.
+6) Read the CTS-generated Verilog file.
+7) Import both the minimum and maximum liberty files.
+8) Define clock domains.
+9) Generate timing reports to analyze the design further.
+
+![1](https://github.com/ramdev604/pes_pd/assets/43489027/1b3ed73d-88b7-44b4-969f-5dc6c7e9a274)
+
+
+![2](https://github.com/ramdev604/pes_pd/assets/43489027/11bf6e13-d47f-440c-af19-fca9a36d7867)
+
+The timing results are unlikely to meet our expectations due to the utilization of min and max library files, which OpenRoad does not currently support for multi-corner optimization. To address this, we will solely employ the typical corner library for optimization purposes.
+
+![3](https://github.com/ramdev604/pes_pd/assets/43489027/b579270f-696c-4259-9491-2a31a61a4eb7)
+
+![4](https://github.com/ramdev604/pes_pd/assets/43489027/55d8df9e-8633-4608-9f36-149d8dde70c3)
+
 
 </details>
 
