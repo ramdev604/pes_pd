@@ -288,7 +288,8 @@ For the design to be complete, the worst negative slack needs to be above or equ
 4. Optimize the fanout value with OpenLANE tool
 
 Since we have synthesised the core using our vsdinv cell too and as it got successfully synthesized, it should be visible in layout after ```run_placement``` stage which is followed after ```run_floorplan``` stage
-![d4_8](https://github.com/ramdev604/pes_pd/assets/43489027/4092e3cf-65e1-435f-83b5-03dc2486eb5b)
+![d4_8](https://github.com/ramdev604/pes_pd/assets/43489027/47852fe1-1979-44fd-9473-19d54a853f33)
+
 
 </details>
 
