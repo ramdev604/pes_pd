@@ -14,7 +14,6 @@ This repository provides a comprehensive guide to navigate the entire physical d
 
 ## Invoking OpenLANE
 
-*username changed to ramdev from Lab 2*
 
 ![d1_1](https://github.com/ramdev604/pes_pd/assets/43489027/cb079707-c611-486c-bab5-4bdde433faae)
 
