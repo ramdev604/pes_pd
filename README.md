@@ -48,6 +48,8 @@ OpenLANE flow consists of several stages. By default all flow steps are run in s
 
 ## Invoking OpenLANE
 
+*username changed to ramdev from Lab 2*
+
 ![d1_1](https://github.com/ramdev604/pes_pd/assets/43489027/cb079707-c611-486c-bab5-4bdde433faae)
 
 
