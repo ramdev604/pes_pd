@@ -260,7 +260,7 @@ The delay is high when the fanout is high. Therefore we can re-run synthesis by 
 Since we have synthesised the core using our vsdinv cell too and as it got successfully synthesized, it should be visible in layout after ```run_placement``` stage which is followed after ```run_floorplan``` stage
 ![d4_8](https://github.com/ramdev604/pes_pd/assets/43489027/47852fe1-1979-44fd-9473-19d54a853f33)
 
-#### Clock Tree Synthesis
+## Clock Tree Synthesis
 
 After addressing slack violations using the "pre_sta.conf" configuration, generate a netlist with the corrected design using "write_verilog." Subsequently, replace the original OpenLANE-generated "picorv32a.synthesis.v" file with this modified netlist to ensure the design incorporates the necessary fixes.
 
