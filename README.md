@@ -78,44 +78,49 @@ To view the layout of the placement, use the command ```magic -T /home/vsduser/D
 ![d2_3](https://github.com/ramdev604/pes_pd/assets/43489027/a163cce3-dd19-4dae-9a59-271a3f96131b)
 
 
-## Cell Design Flow
+# Cell Design Flow
 
-Cell design is done in 3 parts:
+Cell Design is the process of creating electronic components, known as cells, for use in integrated circuits. It involves three main stages:
 
-1. **Inputs** - PDKs (Process design kits), DRC & LVS rules, SPICE models, library & user-defined specs.
-2. **Design Steps** - Design steps of cell design involves Circuit Design, Layout Design, Characterization. The software GUNA used for characterization. The characterization can be classified as Timing characterization, Power characterization and Noise characterization.
-3. **Outputs** - Outputs of the Design are CDL (Circuit Description Language), GDSII, LEF, extracted Spice netlist (.cir), timing, noise, power.libs, function.
+1) **Inputs**: In this phase, designers gather essential information and resources needed for the cell design. This includes Process Design Kits (PDKs), which contain manufacturing details, Design Rule Check (DRC) and Layout vs. Schematic (LVS) rules for ensuring correctness, SPICE models for simulating component behavior, and library specifications. These inputs provide the foundation for the design process.
 
-### Standard cell Charachterization Flow
+2) **Design**: During this stage, designers use the gathered inputs to create the electronic cell. This process typically includes Circuit Design, where the logical and electrical schematic is defined, Layout Design, where the physical arrangement of components is determined while adhering to manufacturing rules, and Characterization, where the cell's performance is analyzed using tools like GUNA. Characterization can involve Timing characterization (evaluating signal timing), Power characterization (assessing power consumption), and Noise characterization (examining electrical noise).
 
-Standard Cell Libraries consist of cells with different functionality/drive strengths. These cells need to be characterized by liberty files to be used by synthesis tools to determine optimal circuit arrangement. The open-source software GUNA is used for characterization.
-Characterization is a well-defined flow consisting of the following steps:
+3) **Outputs**: The design process yields various outputs that are essential for subsequent phases of chip development. These outputs include the Circuit Description Language (CDL), which describes the cell's behavior, the Graphic Data System II (GDSII) layout data used in manufacturing, the Library Exchange Format (LEF) for tool compatibility, an extracted Spice netlist (which considers parasitic elements for accurate simulation), timing data, noise data, power libraries, and a functional description to understand the cell's purpose.
 
-- Link Model File of CMOS containing property definitions
-- Specify process corner(s) for the cell to be characterized
-- Specify cell delay and slew thresholds percentages
-- Specify timing and power tables
-- Read the parasitic extracted netlist
-- Apply input or stimulus
-- Provide necessary simulation commands
+# Standard Cell Characterization Flow
 
-### General Timing characterization parameters
+## Introduction
 
-#### Timing threshold definitions
+Standard Cell Libraries are a fundamental component in digital integrated circuit design, providing a collection of pre-designed cells with various functionalities. To effectively use these libraries, they must be characterized to generate Liberty files, which are essential for synthesis tools to determine the optimal arrangement of circuit components.The open-source software GUNA is used for characterization
 
-- ```slew_low_rise_thr``` - 20% from bottom power supply when the signal is rising
-- ```slew_high_rise_thr``` - 20% from top power supply when the signal is rising
-- ```slew_low_fall_thr``` - 20% from bottom power supply when the signal is falling
-- ```slew_high_fall_thr``` - 20% from top power supply when the signal is falling
-- ```in_rise_thr``` - 50% point on the rising edge of input
-- ```in_fall_thr``` - 50% point on the falling edge of input
-- ```out_rise_thr``` - 50% point on the rising edge of ouput
-- ```out_fall_thr``` - 50% point on the falling edge of ouput
+## Characterization Flow
 
-These are the main parameters that we use to calculate factors such as propogation delay and transition time
+The characterization process involves the following steps:
 
-- ```propogation delay ``` - time(out_*_thr) - time(in_*_thr)
-- ```Transition time``` - time(slew_high_rise_thr) - time(slew_low_rise_thr)
+1. **Link Model File of CMOS**: This step involves linking a model file that defines the properties and behavior of the CMOS (Complementary Metal-Oxide-Semiconductor) technology process being used.
+2. **Specify Process Corner(s)**: Process corners represent different manufacturing variations that impact the performance of the integrated circuits. You must specify one or more process corners for the cell to be characterized. This information helps in understanding how the cell behaves under different conditions.
+3. **Specify Cell Delay and Slew Thresholds Percentages**: Define the desired delay and slew thresholds as percentages. These thresholds are crucial for optimizing circuit performance and determining acceptable signal characteristics.
+4. **Specify Timing and Power Tables**: Create tables that specify timing and power data for the cell under various conditions. These tables are essential for accurate modeling of cell behavior.
+5. **Read the Parasitic Extracted Netlist**: Import the parasitic extracted netlist, which includes information about the interconnections and parasitic elements in the design. This step ensures a more realistic representation of the cell's behavior.
+6. **Apply Input or Stimulus**: Provide input signals or stimuli to the cell. This can include various test vectors or patterns that are used to evaluate the cell's response under different conditions.
+7. **Provide Necessary Simulation Commands**: Define the simulation commands required to run the characterization process. These commands may include simulation settings, simulation types (e.g., transient, static timing analysis), and other parameters to control the simulation environment.
+
+# Timing threshold definitions
+
+1) **slew_low_rise_thr**: This threshold is set at 20% above the lowest power supply voltage when the signal is transitioning from low to high (rising).
+2) **slew_high_rise_thr**: This threshold is set at 20% below the highest power supply voltage when the signal is transitioning from low to high (rising).
+3) **slew_low_fall_thr**: This threshold is set at 20% above the lowest power supply voltage when the signal is transitioning from high to low (falling).
+4) **slew_high_fall_thr**: This threshold is set at 20% below the highest power supply voltage when the signal is transitioning from high to low (falling).
+5) **in_rise_thr**: This threshold is placed at the point where the input signal is halfway through its transition from low to high during a rising edge.
+6) **in_fall_thr**: This threshold is placed at the point where the input signal is halfway through its transition from high to low during a falling edge.
+7) **out_rise_thr**: This threshold is positioned at the point where the output signal is halfway through its transition from low to high during a rising edge.
+8) **out_fall_thr**: This threshold is positioned at the point where the output signal is halfway through its transition from high to low during a falling edge.
+9) **Propagation Delay**: This is the time it takes for a signal to propagate from an input threshold (in_thr) to an output threshold (out_thr). It represents the time it takes for a change at the input to affect the output.
+Propagation Delay = time(out_thr) - time(in_thr)
+11) **Transition Time**: This is the time it takes for a signal to transition from a low to high state (rising edge) or from a high to low state (falling edge) within a specific voltage range. In this case, you are calculating the transition time from the high threshold (slew_high_rise_thr) to the low threshold (slew_low_rise_thr) during a rising edge.
+Transition Time = time(slew_low_rise_thr) - time(slew_high_rise_thr)
+
 
 
 </details>
@@ -240,7 +245,7 @@ For the design to be complete, the worst negative slack needs to be above or equ
 
 
 
-    The delay is high when the fanout is high. Therefore we can re-run synthesis by changing the value of ```SYNTH_MAX_FANOUT``` variable
+The delay is high when the fanout is high. Therefore we can re-run synthesis by changing the value of ```SYNTH_MAX_FANOUT``` variable
     
 2. Enable cell buffering 
 3. Perform manual cell replacement on our WNS path with the OpenSTA tool
@@ -292,44 +297,40 @@ The timing results are unlikely to meet our expectations due to the utilization 
 <summary>DAY 5 : Final steps for RTL2GDSII</summary>
 <br>
 
-## Power Distribution Network
+# Power Distribution Network
 
-After generating our clock tree network and verifying post routing STA checks we are ready to generate the power distribution network ```gen_pdn``` in OpenLANE:
+After generating the clock tree network and verifying post-routing STA checks, we're ready to generate the power distribution network (PDN) in OpenLANE. The PDN feature within OpenLANE will create:
 
-The PDN feature within OpenLANE will create:
-
-- Power ring global to the entire core
-- Power halo local to any preplaced cells
-- Power straps to bring power into the center of the chip
-- Power rails for the standard cells
+1) A power ring that spans the entire core.
+2) A power halo, which is local to any preplaced cells.
+3) Power straps, facilitating power distribution to the center of the chip.
+4) Power rails dedicated to the standard cells.
 
 ![d5_1](https://github.com/ramdev604/pes_pd/assets/43489027/d49d45aa-5d23-4e8f-930c-948c394c4af7)
 
 
-Note: The pitch of the metal 1 power rails defines the height of the standard cells
+# Global and Detailed Routing
 
-## Global and Detailed Routing
+OpenLANE employs TritonRoute as the routing engine for physical design implementation, involving two key stages:
 
-OpenLANE uses TritonRoute as the routing engine ```run_routing``` for physical implementations of designs. Routing consists of two stages:
+1) Global Routing: This phase generates routing guides for interconnects, defining the layers and locations on the chip for each net.
+2) Detailed Routing: Metal traces are incrementally placed following the routing guides to physically implement the interconnects.
 
-- Global Routing - Routing guides are generated for interconnects on our netlist defining what layers, and where on the chip each of the nets will be reputed
-- Detailed Routing - Metal traces are iteratively laid across the routing guides to physically implement the routing guides
+In case of persistent Design Rule Check (DRC) errors after routing, users have two options:
 
-If DRC errors persist after routing the user has two options:
+1) Re-run routing with higher Quality of Results (QoR) settings.
+2) Manually address and correct specific DRC errors mentioned in the TritonRoute-generated "tritonRoute.drc" file.
 
-- Re-run routing with higher QoR settings
-- Manually fix DRC errors specific in tritonRoute.drc file
+# SPEF Extraction
 
-## SPEF Extraction
+After completing routing, interconnect parasitics need to be extracted for sign-off post-route Static Timing Analysis (STA). These parasitics are typically extracted into a Standard Parasitic Exchange Format (SPEF) file. It's important to note that, as of now, OpenLANE does not include an integrated SPEF extractor for this purpose.
 
-After routing has been completed interconnect parasitics can be extracted to perform sign-off post-route STA analysis. The parasitics are extracted into a SPEF file. The SPEF extractor is not included within OpenLANE as of now.
-
+#### Step 1: SPEF Extraction can be done by using these commands.
 ```
 cd ~/Desktop/work/tools/SPEFEXTRACTOR
 python3 main.py <path to merged.lef in tmp> <path to def in routing>
 ```
-
-The SPEF File will be generated in the location where def file is present
+The SPEF file will be generated in the same location as the DEF file.
 
 
 
