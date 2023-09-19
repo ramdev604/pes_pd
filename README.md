@@ -35,39 +35,7 @@ OpenLANE flow consists of several stages. By default all flow steps are run in s
     3. `Netgen` - Performs LVS Checks
     4. `CVC` - Performs Circuit Validity Checks
 
-OpenLANE can be operated at 2 different modes ie., Automated flow and Interactive mode.
 
-## To enter the automated flow, use these commands
-```
-cd OpenLane
-make mount
-./ flow.tcl -design openlane/<DESIGN_NAME>  -tag <TAG>
-```
-
-## To enter the Interactive mode, use these commands 
-```
-cd OpenLane
-make mount
-./flow.tcl -interactive 
-prep -design <path_to_your_design_folder> -tag <tag> -overwrite //overwrite is optional
-```
-
-**Interactive mode** offers us to learn all the steps present in automated flow step by step.
-The steps are as follows : 
-
-```
-run_synthesis
-run_floorplan
-run_placement
-run_cts
-run_routing
-write_powered_verilog followed by set_netlist $::env(lvs_result_file_tag).powered.v
-run_magic
-run_magic_spice_export
-run_magic_drc
-run_lvs
-run_antenna_check
-```
 
 # Labs
 
